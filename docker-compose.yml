@@ -1,0 +1,133 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: myflaskapp_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myflaskapp
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+    networks:
+      - microapp_network
+
+  # Consul Service Discovery
+  consul:
+    image: hashicorp/consul:1.14
+    container_name: myflaskapp_consul
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    command: agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0 -bind=0.0.0.0
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+    volumes:
+      - consul_data:/consul/data
+    networks:
+      - microapp_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Frontend Service
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: myflaskapp_frontend
+    ports:
+      - "5001:5001"
+    environment:
+      FLASK_APP: run.py
+      FLASK_ENV: production
+    depends_on:
+      consul:
+        condition: service_started
+    volumes:
+      - ./frontend:/app
+    networks:
+      - microapp_network
+    restart: unless-stopped
+
+  # Users Microservice
+  microusers:
+    build:
+      context: .
+      dockerfile: microUsers/Dockerfile
+    container_name: myflaskapp_users
+    ports:
+      - "5002:5002"
+    environment:
+      FLASK_APP: run.py
+      FLASK_ENV: production
+    depends_on:
+      mysql:
+        condition: service_healthy
+      consul:
+        condition: service_started
+    volumes:
+      - ./microUsers:/app
+    networks:
+      - microapp_network
+    restart: unless-stopped
+
+  # Products Microservice
+  microproducts:
+    build:
+      context: .
+      dockerfile: microProducts/Dockerfile
+    container_name: myflaskapp_products
+    ports:
+      - "5003:5003"
+    environment:
+      FLASK_APP: run.py
+      FLASK_ENV: production
+    depends_on:
+      mysql:
+        condition: service_healthy
+      consul:
+        condition: service_started
+    volumes:
+      - ./microProducts:/app
+    networks:
+      - microapp_network
+    restart: unless-stopped
+
+  # Orders Microservice
+  microorders:
+    build:
+      context: .
+      dockerfile: microOrders/Dockerfile
+    container_name: myflaskapp_orders
+    ports:
+      - "5004:5004"
+    environment:
+      FLASK_APP: run.py
+      FLASK_ENV: production
+    depends_on:
+      mysql:
+        condition: service_healthy
+      consul:
+        condition: service_started
+    volumes:
+      - ./microOrders:/app
+    networks:
+      - microapp_network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  consul_data:
+
+networks:
+  microapp_network:
+    driver: bridge

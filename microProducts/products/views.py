@@ -1,11 +1,10 @@
 from flask import Flask, jsonify
-from users.controllers.user_controller import user_controller
+from products.controllers.product_controller import product_controller
 from db.db import db
 from flask_cors import CORS
 import consul
 
 app = Flask(__name__)
-app.secret_key = 'secret123'
 app.config.from_object('config.Config')
 db.init_app(app)
 
@@ -14,10 +13,10 @@ consul_client = consul.Consul(host='consul', port=8500)
 
 # Aplicar configuración remota desde Consul KV
 try:
-    _, data = consul_client.kv.get('users-service/', recurse=True)
+    _, data = consul_client.kv.get('products-service/', recurse=True)
     if data:
         for item in data:
-            key = item['Key'].replace('users-service/', '')
+            key = item['Key'].replace('products-service/', '')
             app.config[key] = item['Value'].decode('utf-8') if item['Value'] else None
 except Exception as e:
     print(f"[WARN] No se pudo cargar config remota de Consul: {e}")
@@ -28,21 +27,21 @@ try:
         name=app.config['SERVICE_NAME'],
         port=int(app.config['SERVICE_PORT']),
         check=consul.Check.http(
-            f"http://{app.config['SERVICE_HOST']}:{app.config['SERVICE_PORT']}/health",
+            f"http://microproducts:{app.config['SERVICE_PORT']}/health",
             interval='10s'
         )
     )
 except Exception as e:
     print(f"[WARN] No se pudo registrar el servicio en Consul: {e}")
 
-# Registrando el blueprint del controlador de usuarios
-app.register_blueprint(user_controller)
-CORS(app, supports_credentials=True)
+# Registrando el blueprint del controlador de productos
+app.register_blueprint(product_controller)
+CORS(app, resources={r"/api/*": {"origins": "http://192.168.80.3:5001"}}, supports_credentials=True)
 
 # Healthcheck endpoint
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({'status': 'healthy', 'service': 'users-service'}), 200
+    return jsonify({'status': 'healthy', 'service': 'products-service'}), 200
 
 if __name__ == '__main__':
     app.run()
