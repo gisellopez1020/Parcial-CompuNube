@@ -50,6 +50,7 @@ function getOrder(orderId) {
         var row = document.createElement("tr");
         row.innerHTML = `
           <td>${item.product_id}</td>
+          <td>${item.product_name}</td>
           <td>${item.quantity}</td>
           <td>$${item.price.toFixed(2)}</td>
           <td>$${item.subtotal.toFixed(2)}</td>

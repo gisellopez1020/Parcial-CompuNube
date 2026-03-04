@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS order_items (
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id int NOT NULL,
     product_id int NOT NULL,
+    product_name varchar(100) NOT NULL,
     quantity int NOT NULL,
     price decimal(10, 2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE

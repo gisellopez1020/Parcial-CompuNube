@@ -85,6 +85,7 @@ def create_order():
         product = resp.json()
         available_quantity = product.get('quantity', 0)
         price = product.get('price', 0)
+        name = product.get('name', 'Producto Desconocido')
 
         if available_quantity < quantity:
             return jsonify({'message': f'Inventario insuficiente para el producto {product_id}'}), 409
@@ -92,6 +93,7 @@ def create_order():
         total += price * quantity
         order_items.append({
             'product_id': product_id,
+            'product_name': name,
             'quantity': quantity,
             'price': price,
             'new_quantity': available_quantity - quantity
@@ -119,6 +121,7 @@ def create_order():
             order_item = OrderItem(
                 order_id=new_order.id,
                 product_id=item['product_id'],
+                product_name=item['product_name'],
                 quantity=item['quantity'],
                 price=item['price']
             )
