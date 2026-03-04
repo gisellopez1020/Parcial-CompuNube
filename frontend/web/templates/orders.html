@@ -1,62 +1,124 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order Management</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <style>
-      body {
-        padding-top: 50px;
-        padding-bottom: 20px;
-      }
-      .navbar {
-        margin-bottom: 20px;
-      }
-      .order-list {
-        margin-top: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="/dashboard">Store Management</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarCollapse"
-        aria-controls="navbarCollapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Management</title>
 
-    <div class="container">
-      <h2 class="mt-4">Orders List</h2>
-      <table id="order-list" class="table table-striped">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>User</th>
-            <th>Email</th>
-            <th>Total</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="button" class="btn btn-primary" onclick="getOrders()">
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+
+<style>
+
+  body {
+    background: #f4f6f9;
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    background: #ffffff !important;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    padding: 15px 40px;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #1e3c72 !important;
+  }
+
+  /* TITULOS */
+  .section-title {
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 10px;
+  }
+
+  .section-description {
+    color: #6c757d;
+    margin-bottom: 30px;
+  }
+
+  /* CARD */
+  .card-custom {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  /* TABLA */
+  .table thead {
+    background-color: #1e3c72;
+    color: white;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f1f4f8;
+  }
+
+  /* BOTON */
+  .btn-primary-custom {
+    background: #1e3c72;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 20px;
+    transition: 0.3s ease;
+    color: white;
+  }
+
+  .btn-primary-custom:hover {
+    background: #16325c;
+    color: white;
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top">
+  <a class="navbar-brand" href="/dashboard">Mini Store</a>
+</nav>
+
+<div class="container">
+
+  <h2 class="section-title">Order Management</h2>
+  <p class="section-description">
+    Visualiza y gestiona las órdenes de compra realizadas por los usuarios.
+  </p>
+
+  <div class="card card-custom p-4">
+
+    <table id="order-list" class="table table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Total</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="mt-3">
+      <button type="button" class="btn btn-primary-custom" onclick="getOrders()">
         Get Orders
       </button>
     </div>
 
-    <script src="static/scriptOrders.js"></script>
-  </body>
+  </div>
+
+</div>
+
+<script src="static/scriptOrders.js"></script>
+
+</body>
 </html>

@@ -1,100 +1,160 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Management</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <style>
-      body {
-        padding-top: 50px;
-        padding-bottom: 20px;
-      }
-      .navbar {
-        margin-bottom: 20px;
-      }
-      .form-container {
-        max-width: 500px;
-        margin: 0 auto;
-      }
-      .user-list {
-        margin-top: 20px;
-        list-style-type: none;
-      }
-      .user-item {
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-      .user-item a {
-        margin-right: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="/dashboard">Store Management</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarCollapse"
-        aria-controls="navbarCollapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>User Management</title>
 
-    <div class="container">
-      <div class="form-container">
-        <h2>Add New User</h2>
-        <form id="add-user-form">
-          <div class="form-group">
-            <label for="name">Name</label>
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+
+<style>
+
+  body {
+    background: #f4f6f9;
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    background: #ffffff !important;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    padding: 15px 40px;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #1e3c72 !important;
+  }
+
+  /* CARDS */
+  .card-custom {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-header-custom {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    padding: 15px 20px;
+    font-weight: 600;
+  }
+
+  .btn-primary-custom {
+    background: #1e3c72;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 20px;
+    color: white;
+    transition: 0.3s ease;
+  }
+
+  .btn-primary-custom:hover {
+    background: #16325c;
+    color: white;
+  }
+
+  .table thead {
+    background-color: #1e3c72;
+    color: white;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f1f4f8;
+  }
+
+  h2 {
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 20px;
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top">
+  <a class="navbar-brand" href="/dashboard">Mini Store</a>
+</nav>
+
+<div class="container">
+
+  <!-- FORMULARIO -->
+  <div class="card card-custom mb-5">
+    <div class="card-header-custom">
+      Add New User
+    </div>
+    <div class="card-body">
+
+      <form id="add-user-form">
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Name</label>
             <input type="text" class="form-control" id="name" required />
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
+
+          <div class="form-group col-md-6">
+            <label>Email</label>
             <input type="email" class="form-control" id="email" required />
           </div>
-          <div class="form-group">
-            <label for="username">Username</label>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Username</label>
             <input type="text" class="form-control" id="username" required />
           </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              required
-            />
-          </div>
-          <button type="button" onclick="createUser()">Create User</button>
-        </form>
-      </div>
 
-      <h2>Users List</h2>
-      <table id="user-list" class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Username</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="button" onclick="getUsers()">Get Users</button>
+          <div class="form-group col-md-6">
+            <label>Password</label>
+            <input type="password" class="form-control" id="password" required />
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary-custom" onclick="createUser()">
+          Create User
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <h2>Users List</h2>
+
+  <div class="card card-custom p-3">
+    <table id="user-list" class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Username</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="mt-3">
+      <button class="btn btn-outline-primary" onclick="getUsers()">
+        Get Users
+      </button>
     </div>
 
-    <script src="static/scriptUsers.js"></script>
-  </body>
+  </div>
+
+</div>
+
+<script src="static/scriptUsers.js"></script>
+
+</body>
 </html>
