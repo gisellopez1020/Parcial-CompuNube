@@ -8,82 +8,139 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+
     <style>
       body {
-        padding-top: 50px;
-        padding-bottom: 20px;
+        padding-top: 70px;
+        background-color: #f4f6f9;
       }
+
       .navbar {
-        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       }
-      .form-container {
-        max-width: 600px;
-        margin: 0 auto;
+
+      .card-custom {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       }
-      .items-table {
-        margin-top: 20px;
+
+      .card-header-custom {
+        background: linear-gradient(90deg, #1f3c88, #2b5797);
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        border-radius: 12px 12px 0 0;
+        padding: 15px 20px;
+      }
+
+      .info-label {
+        font-weight: 600;
+        color: #555;
+      }
+
+      .total-box {
+        background: #e9eef5;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .total-box input {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        background: transparent;
+      }
+
+      .items-table thead {
+        background-color: #1f3c88;
+        color: white;
+      }
+
+      .items-table tbody tr:hover {
+        background-color: #f1f3f8;
+      }
+
+      .btn-back {
+        border-radius: 25px;
+        padding: 8px 25px;
       }
     </style>
   </head>
+
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="/dashboard">Store Management</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarCollapse"
-        aria-controls="navbarCollapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <a class="navbar-brand font-weight-bold" href="/dashboard">
+        Store Management
+      </a>
     </nav>
 
     <div class="container">
-      <div class="form-container">
-        <h2 class="mt-4">Order Detail</h2>
-
-        <input type="hidden" id="order-id" value="{{ id }}" />
-
-        <div class="form-group">
-          <label for="user-name">User</label>
-          <input type="text" class="form-control" id="user-name" readonly />
-        </div>
-        <div class="form-group">
-          <label for="user-email">Email</label>
-          <input type="text" class="form-control" id="user-email" readonly />
-        </div>
-        <div class="form-group">
-          <label for="total">Total</label>
-          <input type="text" class="form-control" id="total" readonly />
-        </div>
-        <div class="form-group">
-          <label for="created-at">Date</label>
-          <input type="text" class="form-control" id="created-at" readonly />
+      <div class="card card-custom">
+        <div class="card-header-custom">
+          Order Detail
         </div>
 
-        <h4 class="mt-4">Order Items</h4>
-        <table id="items-table" class="table table-bordered items-table">
-          <thead>
-            <tr>
-              <th>Product ID</th>
-              <th>Quantity</th>
-              <th>Unit Price</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="card-body">
 
-        <a href="/orders" class="btn btn-secondary mt-2">Back to Orders</a>
+          <input type="hidden" id="order-id" value="{{ id }}" />
+
+          <div class="row">
+            <div class="col-md-8">
+
+              <div class="form-group">
+                <label class="info-label" for="user-name">User</label>
+                <input type="text" class="form-control" id="user-name" readonly />
+              </div>
+
+              <div class="form-group">
+                <label class="info-label" for="user-email">Email</label>
+                <input type="text" class="form-control" id="user-email" readonly />
+              </div>
+
+              <div class="form-group">
+                <label class="info-label" for="created-at">Date</label>
+                <input type="text" class="form-control" id="created-at" readonly />
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="total-box">
+                <label class="info-label" for="total">Total</label>
+                <input type="text" id="total" readonly />
+              </div>
+            </div>
+          </div>
+
+          <h5 class="mt-4 font-weight-bold">Order Items</h5>
+
+          <table id="items-table" class="table table-bordered items-table mt-3">
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="text-right">
+            <a href="/orders" class="btn btn-secondary btn-back">
+              Back to Orders
+            </a>
+          </div>
+
+        </div>
       </div>
     </div>
 
     <script src="/static/scriptOrders.js"></script>
     <script>
-      // Carga el detalle de la orden al abrir la página
       document.addEventListener("DOMContentLoaded", function () {
         const orderId = document.getElementById("order-id").value;
         getOrder(orderId);

@@ -1,50 +1,115 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mini Store</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <style>
-      body {
-        padding-top: 50px;
-        padding-bottom: 20px;
-      }
-      .navbar {
-        margin-bottom: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarCollapse"
-        aria-controls="navbarCollapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mini Store - Dashboard</title>
 
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/products">Product Management</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users">User Management</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/orders">Order Management</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </body>
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+
+<style>
+
+  body {
+    background: #f4f6f9;
+    padding-top: 80px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    background: #ffffff !important;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    padding: 15px 40px;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #1e3c72 !important;
+  }
+
+  .nav-link {
+    color: #555 !important;
+    font-weight: 500;
+    margin-left: 20px;
+    transition: 0.3s;
+  }
+
+  .nav-link:hover {
+    color: #1e3c72 !important;
+  }
+
+  .nav-item.active .nav-link {
+    color: #1e3c72 !important;
+    font-weight: 600;
+  }
+
+  /* DASHBOARD */
+  .dashboard-header {
+    margin-bottom: 30px;
+  }
+
+  .dashboard-header h2 {
+    font-weight: 700;
+    color: #1e3c72;
+  }
+
+  .card-dashboard {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+  }
+
+  .card-dashboard:hover {
+    transform: translateY(-5px);
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top">
+  <a class="navbar-brand" href="#">Mini Store</a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/products">Productos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users">Usuarios</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/orders">Órdenes</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Encabezado -->
+  <div class="dashboard-header">
+    <h2>Bienvenido al Panel Administrativo</h2>
+    <p class="text-muted">
+      Mini Store es una plataforma basada en arquitectura de microservicios
+      que permite la gestión eficiente de usuarios, productos e inventario,
+      así como el procesamiento de órdenes de compra.
+    </p>
+  </div>
+
+  </div>
+
+</div>
+
+</body>
 </html>
