@@ -5,9 +5,9 @@ WORKDIR /app
 # Copiar requirements
 COPY ../requirements-common.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip install --no-cache-dir requests
 # Copiar código del frontend
-COPY . .
+COPY frontend/ .
 
 # Exponer puerto
 EXPOSE 5001
